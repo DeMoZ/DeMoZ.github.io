@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roman Kolychev — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0a0a0b; --bg2:#111113; --card:#151518; --line:rgba(255,255,255,.08);
+    --text:#f2f2f0; --muted:#8d8d93; --accent:#c6ff3d; --accent2:#7a5cff;
+    --serif:"Instrument Serif", Georgia, serif; --sans:"Inter Tight", system-ui, sans-serif; --mono:"JetBrains Mono", ui-monospace, monospace;
+    --r:20px;
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  html, body { overflow-x:hidden; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.55 var(--sans); -webkit-font-smoothing:antialiased; }
+  body::before { /* grain */
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:100; opacity:.06;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  a { color:inherit; }
+  img { display:block; max-width:100%; }
+  .wrap { max-width:1240px; margin:0 auto; padding:0 16px; }
+  @media (min-width:760px) { .wrap { padding:0 32px; } }
+
+  /* nav pill */
+  nav { position:fixed; top:14px; left:50%; transform:translateX(-50%); z-index:50; display:flex; gap:4px; padding:6px;
+        background:rgba(20,20,23,.6); backdrop-filter:blur(14px) saturate(1.4); -webkit-backdrop-filter:blur(14px) saturate(1.4);
+        border:1px solid var(--line); border-radius:999px; max-width:calc(100vw - 24px); overflow-x:auto; scrollbar-width:none; }
+  nav a { text-decoration:none; font-size:14px; padding:8px 14px; border-radius:999px; color:var(--muted); white-space:nowrap; transition:.2s; }
+  nav a:hover { color:var(--text); background:rgba(255,255,255,.06); }
+  nav a.cta { background:var(--text); color:#0a0a0b; font-weight:600; }
+
+  /* hero */
+  .hero { position:relative; padding:150px 0 70px; overflow:hidden; }
+  .glow { position:absolute; width:720px; height:720px; border-radius:50%; filter:blur(120px); opacity:.35; pointer-events:none; }
+  .glow.a { background:var(--accent2); top:-260px; right:-180px; }
+  .glow.b { background:var(--accent); bottom:-420px; left:-260px; opacity:.16; }
+  .eyebrow { font:500 12px/1 var(--mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); display:flex; align-items:center; gap:10px; }
+  .dot { width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(198,255,61,.15); }
+  h1 { font:400 clamp(54px,11vw,168px)/.9 var(--serif); letter-spacing:-.03em; margin:22px 0 0; }
+  h1 em { color:var(--accent); }
+  .lede { max-width:640px; font-size:clamp(18px,2.2vw,22px); color:#c8c8cc; margin:28px 0 36px; }
+  .btns { display:flex; gap:10px; flex-wrap:wrap; }
+  .btn { display:inline-flex; align-items:center; gap:8px; min-height:46px; padding:0 22px; border-radius:999px; text-decoration:none; font-weight:600; font-size:15px; transition:transform .2s, background .2s; }
+  .btn:hover { transform:translateY(-2px); }
+  .btn.primary { background:var(--accent); color:#0a0a0b; }
+  .btn.ghost { border:1px solid var(--line); background:rgba(255,255,255,.03); }
+  .btn.ghost:hover { background:rgba(255,255,255,.08); }
+  .todo { outline:1px dashed #ffd866; outline-offset:3px; border-radius:4px; color:#ffd866; }
+
+  /* stats */
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-bottom:1px solid var(--line); margin-top:70px; }
+  .stat { padding:22px 18px; border-right:1px solid var(--line); }
+  .stat:last-child { border-right:0; }
+  .stat b { display:block; font:400 40px/1 var(--serif); }
+  .stat span { font:12px/1.4 var(--mono); color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
+
+  /* marquee */
+  .marquee { overflow:hidden; padding:26px 0; border-bottom:1px solid var(--line); mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent); }
+  .track { display:flex; gap:48px; width:max-content; animation:mq 40s linear infinite; font:400 30px/1 var(--serif); color:#5d5d63; }
+  .track i { color:var(--accent); font-style:normal; }
+  @keyframes mq { to { transform:translateX(-50%); } }
+
+  /* sections */
+  section { padding:100px 0 20px; }
+  .sec-head { display:flex; justify-content:space-between; align-items:end; gap:20px; margin-bottom:48px; flex-wrap:wrap; }
+  h2 { font:400 clamp(44px,7vw,96px)/.95 var(--serif); letter-spacing:-.02em; margin:12px 0 0; }
+  h2 em { color:var(--muted); }
+  .sec-head p { max-width:360px; color:var(--muted); margin:0; }
+
+  /* project */
+  .project { border-top:1px solid var(--line); padding:44px 0 72px; }
+  .p-head { display:grid; grid-template-columns:90px 1fr auto; gap:20px; align-items:baseline; margin-bottom:28px; }
+  .num { font:500 13px var(--mono); color:var(--muted); }
+  h3 { font:600 clamp(28px,4vw,44px)/1.05 var(--sans); letter-spacing:-.03em; margin:0; }
+  h3 small { display:block; font:400 15px var(--mono); color:var(--muted); letter-spacing:0; margin-top:8px; }
+  .tags { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; }
+  .tag { font:500 12px var(--mono); padding:6px 10px; border:1px solid var(--line); border-radius:999px; color:#bdbdc2; white-space:nowrap; }
+  .tag.hot { border-color:rgba(198,255,61,.4); color:var(--accent); }
+  .p-body { display:grid; grid-template-columns:90px 1fr 380px; gap:20px; }
+  .p-body .info { grid-column:3; }
+  .p-body .bento { grid-column:2; grid-row:1; }
+  .info p { margin:0 0 14px; color:#d4d4d8; }
+  .info ul { list-style:none; margin:0 0 22px; padding:0; }
+  .info li { padding:10px 0; border-bottom:1px solid var(--line); color:#c3c3c8; font-size:15px; display:flex; gap:10px; }
+  .info li::before { content:"↳"; color:var(--accent); font-family:var(--mono); }
+
+  /* bento */
+  .bento { display:grid; gap:10px; grid-template-columns:repeat(var(--c,2),1fr); align-items:start; }
+  .tile { position:relative; border-radius:var(--r); overflow:hidden; background:var(--card); border:1px solid var(--line); transition:transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s; }
+  .tile:hover { transform:translateY(-4px); border-color:rgba(255,255,255,.2); }
+  .tile img { width:100%; height:auto; }
+  .tile .lbl { position:absolute; left:10px; bottom:10px; font:500 11px var(--mono); padding:5px 9px; border-radius:999px; background:rgba(10,10,11,.7); backdrop-filter:blur(8px); color:#ddd; }
+  .tile.span2 { grid-column:span 2; }
+  .tile.full { grid-column:1 / -1; }
+  .phone { border-radius:28px; padding:6px; background:#1d1d21; }
+  .phone img { border-radius:22px; }
+  .yt { display:block; text-decoration:none; }
+  .yt img { width:100%; aspect-ratio:16/9; object-fit:cover; }
+  .yt .play { position:absolute; inset:0; display:grid; place-items:center; }
+  .yt .play span { width:76px; height:76px; border-radius:50%; background:var(--accent); color:#0a0a0b; display:grid; place-items:center; font-size:26px; box-shadow:0 10px 40px rgba(0,0,0,.5); transition:transform .3s; }
+  .yt:hover .play span { transform:scale(1.08); }
+
+  /* about / contact */
+  .about { display:grid; grid-template-columns:1fr 1.4fr; gap:40px; align-items:center; }
+  .avatar { aspect-ratio:1; border-radius:32px; background:linear-gradient(135deg,#1d1d22,#121215); border:1px solid var(--line); display:grid; place-items:center; color:#ffd866; font:14px var(--mono); }
+  .about p { font:400 clamp(24px,3vw,36px)/1.25 var(--serif); margin:0; }
+  .contact { margin:100px 0 40px; padding:clamp(32px,6vw,80px); border-radius:32px; background:radial-gradient(circle at 80% 0%, rgba(122,92,255,.35), transparent 60%), var(--bg2); border:1px solid var(--line); }
+  .contact h2 { margin:0 0 30px; }
+  .links { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; }
+  .links a { display:flex; justify-content:space-between; align-items:center; padding:18px 20px; border-radius:16px; border:1px solid var(--line); text-decoration:none; background:rgba(255,255,255,.02); transition:.2s; }
+  .links a:hover { background:var(--accent); color:#0a0a0b; }
+  footer { display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; padding:30px 0 50px; color:var(--muted); font:12px var(--mono); }
+
+  /* reveal */
+  .rv { opacity:0; transform:translateY(28px); transition:opacity .8s, transform .8s cubic-bezier(.2,.7,.2,1); }
+  .rv.in { opacity:1; transform:none; }
+  @media (prefers-reduced-motion:reduce) { .rv { opacity:1; transform:none; transition:none; } .track { animation:none; } html { scroll-behavior:auto; } }
+
+  @media (max-width:980px) {
+    .p-head { grid-template-columns:1fr; gap:10px; }
+    .tags { justify-content:flex-start; }
+    .p-body { grid-template-columns:1fr; }
+    .p-body .info, .p-body .bento { grid-column:1; grid-row:auto; }
+    .about { grid-template-columns:1fr; }
+    .avatar { max-width:240px; }
+  }
+  @media (max-width:640px) {
+    .stats { grid-template-columns:repeat(2,1fr); }
+    .stat:nth-child(2) { border-right:0; }
+    .stat:nth-child(-n+2) { border-bottom:1px solid var(--line); }
+    .bento { --c:1 !important; }
+    .bento.phones { --c:2 !important; }
+    .tile.span2 { grid-column:auto; }
+    nav { top:10px; }
+    nav a { padding:8px 11px; font-size:13px; }
+    .hero { padding-top:120px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#work">Work</a><a href="#industry">Industry</a><a href="#lab">Lab</a><a class="cta" href="#contact">Contact</a>
+</nav>
+
+<header class="hero">
+  <div class="glow a"></div><div class="glow b"></div>
+  <div class="wrap">
+    <div class="eyebrow rv"><span class="dot"></span> Remote · Portfolio</div>
+    <h1 class="rv">Roman<br><em>Kolychev</em></h1>
+    <p class="lede rv">Unity Developer — games, interactive stories and 3D apps. Architecture, clean code, systems that ship.</p>
+    <div class="btns rv">
+      <a class="btn primary" href="#work">See the work ↓</a>
+      <a class="btn ghost" href="#contact">Get in touch</a>
+    </div>
+    <div class="stats rv">
+      <div class="stat"><b>9</b><span>projects</span></div>
+      <div class="stat"><b>App&nbsp;Store</b><span>&amp; Google Play</span></div>
+      <div class="stat"><b>Steam</b><span>Midline'85 page</span></div>
+      <div class="stat"><b>2</b><span>projects to (soft) launch</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true"><div class="track">
+  <span>Unity</span><i>✦</i><span>C#</span><i>✦</i><span>Zenject</span><i>✦</i><span>Cinemachine</span><i>✦</i><span>Timeline</span><i>✦</i><span>HttpClient</span><i>✦</i><span>Facebook SDK</span><i>✦</i><span>Inverse kinematics</span><i>✦</i><span>SOLID</span><i>✦</i><span>SteamVR</span><i>✦</i>
+  <span>Unity</span><i>✦</i><span>C#</span><i>✦</i><span>Zenject</span><i>✦</i><span>Cinemachine</span><i>✦</i><span>Timeline</span><i>✦</i><span>HttpClient</span><i>✦</i><span>Facebook SDK</span><i>✦</i><span>Inverse kinematics</span><i>✦</i><span>SOLID</span><i>✦</i><span>SteamVR</span><i>✦</i>
+</div></div>
+
+<main class="wrap">
+
+<section id="work">
+  <div class="sec-head rv">
+    <div><div class="eyebrow">01 — Selected work</div><h2>Games &amp; <em>stories</em></h2></div>
+    <p>Released apps, a narrative game on Steam and live-ops features for mobile titles.</p>
+  </div>
+
+  <article class="project rv">
+    <div class="p-head"><span class="num">/01</span><h3>Spark — Interactive Story<small>Red Rift · mobile</small></h3>
+      <div class="tags"><span class="tag hot">Live on stores</span><span class="tag">Features</span><span class="tag">UI redesign</span></div></div>
+    <div class="p-body">
+      <div class="bento phones" style="--c:4">
+        <div class="tile phone"><img loading="lazy" src="gif/01-spark-part1.gif" alt="Spark, part 1"></div>
+        <div class="tile phone"><img loading="lazy" src="gif/01-spark-part2.gif" alt="Spark, part 2"></div>
+        <div class="tile phone"><img loading="lazy" src="gif/01-spark-part3.gif" alt="Spark, part 3"></div>
+        <div class="tile phone"><img loading="lazy" src="gif/01-spark-part4.gif" alt="Spark, part 4"></div>
+      </div>
+      <div class="info">
+        <p>Joined the team to support and extend Spark, an interactive story app.</p>
+        <ul><li>Implemented several new features</li><li>Refreshed the visuals and added new functionality</li><li>Fixed many bugs</li></ul>
+        <div class="btns"><a class="btn ghost" href="https://apps.apple.com/us/app/storyspark-interactive-story/id1665916639">App Store ↗</a><a class="btn ghost" href="https://play.google.com/store/apps/details?id=com.RedRift.StorySpark">Google Play ↗</a></div>
+      </div>
+    </div>
+  </article>
+
+  <article class="project rv">
+    <div class="p-head"><span class="num">/02</span><h3>Midline'85<small>NADSAD · narrative game</small></h3>
+      <div class="tags"><span class="tag hot">MVP</span><span class="tag">Architecture</span><span class="tag">Whole codebase</span></div></div>
+    <div class="p-body">
+      <div class="bento" style="--c:1">
+        <a class="tile yt" href="https://www.youtube.com/watch?v=VOkBH21fDvo"><img loading="lazy" src="https://img.youtube.com/vi/VOkBH21fDvo/maxresdefault.jpg" alt="Midline '85 MVP walkthrough"><div class="play"><span>▶</span></div><span class="lbl">MVP walkthrough · YouTube</span></a>
+      </div>
+      <div class="info">
+        <p>An emotional novel built with like-minded friends. Reached a playable MVP and is being pitched to publishers.</p>
+        <ul><li>Designed the architecture</li><li>Implemented the entire codebase</li></ul>
+        <div class="btns"><a class="btn ghost" href="https://store.steampowered.com/app/2384710/Midline_85/">Steam ↗</a><a class="btn ghost" href="https://drive.google.com/drive/folders/15JgWK5XDLSIjdlLbUqXGr2HT_17i7M0s?usp=sharing">Media ↗</a></div>
+      </div>
+    </div>
+  </article>
+
+  <article class="project rv">
+    <div class="p-head"><span class="num">/03</span><h3>Happy Happens!<small>mobile game</small></h3>
+      <div class="tags"><span class="tag">Facebook SDK</span><span class="tag">Networking</span><span class="tag">QA tools</span></div></div>
+    <div class="p-body">
+      <div class="bento">
+        <div class="tile full"><img loading="lazy" src="gif/03-happy-happens-part1.gif" alt="Happy Happens, part 1"><span class="lbl">01</span></div>
+        <div class="tile"><img loading="lazy" src="gif/03-happy-happens-part2.gif" alt="Happy Happens, part 2"><span class="lbl">02</span></div>
+        <div class="tile"><img loading="lazy" src="gif/03-happy-happens-part3.gif" alt="Happy Happens, part 3"><span class="lbl">03</span></div>
+      </div>
+      <div class="info">
+        <ul><li>Facebook integration: sign-in and loading friends</li><li>Linking the game profile to Facebook, Google Play and App Store accounts</li><li>Client–server networking for the player profile (HttpClient)</li><li>In-game mail system</li><li>Cheat tools for the QA team</li></ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="project rv">
+    <div class="p-head"><span class="num">/04</span><h3>MTS Cashback City<small>mobile city builder</small></h3>
+      <div class="tags"><span class="tag hot">Soft launch</span><span class="tag">Refactoring</span><span class="tag">UI</span></div></div>
+    <div class="p-body">
+      <div class="bento">
+        <div class="tile full"><img loading="lazy" src="gif/04-mts-cashback-part1.gif" alt="MTS Cashback City, part 1"><span class="lbl">01</span></div>
+        <div class="tile"><img loading="lazy" src="gif/04-mts-cashback-part2.gif" alt="MTS Cashback City, part 2"><span class="lbl">02</span></div>
+        <div class="tile"><img loading="lazy" src="gif/04-mts-cashback-part3.gif" alt="MTS Cashback City, part 3"><span class="lbl">03</span></div>
+      </div>
+      <div class="info">
+        <p>Took the project to soft launch.</p>
+        <ul><li>Refactored legacy code</li><li>Built the UI and logic of in-game popups that produce resources and city elements</li></ul>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section id="industry">
+  <div class="sec-head rv">
+    <div><div class="eyebrow">02 — Industry</div><h2>Real-world <em>3D</em></h2></div>
+    <p>Non-gaming apps: industrial data in 3D, web-portal integration, architecture from scratch.</p>
+  </div>
+
+  <article class="project rv">
+    <div class="p-head"><span class="num">/05</span><h3>Sea platform<small>internal company apps</small></h3>
+      <div class="tags"><span class="tag hot">Launched</span><span class="tag">Zenject</span><span class="tag">HttpClient</span><span class="tag">3D data</span></div></div>
+    <div class="p-body">
+      <div class="bento">
+        <div class="tile full"><img loading="lazy" src="gif/08-sea-platform-1-part1.gif" alt="Sea platform"><span class="lbl">Web-portal app</span></div>
+        <div class="tile"><img loading="lazy" src="gif/08-sea-platform-1-part2.gif" alt="Sea platform"></div>
+        <div class="tile"><img loading="lazy" src="gif/08-sea-platform-2.gif" alt="Sea platform drilling"><span class="lbl">Drilling data</span></div>
+        <div class="tile"><img loading="lazy" src="gif/08-sea-platform-3-part1.gif" alt="Sea platform dashboard"></div>
+        <div class="tile"><img loading="lazy" src="gif/08-sea-platform-3-part2.gif" alt="Sea platform dashboard"></div>
+        <div class="tile full"><img loading="lazy" src="gif/08-sea-platform-4-part1.gif" alt="Sea platform video"><span class="lbl">Timeline + Cinemachine</span></div>
+        <div class="tile"><img loading="lazy" src="gif/08-sea-platform-4-part2.gif" alt="Sea platform video"></div>
+        <div class="tile"><img loading="lazy" src="gif/08-sea-platform-4-part3.gif" alt="Sea platform video"></div>
+      </div>
+      <div class="info">
+        <p>Non-gaming apps for an industrial company; the internal project reached launch.</p>
+        <ul><li>Designed the architecture and refactored legacy code across several projects</li><li>Client–server networking for data and media (HttpClient)</li><li>Web-portal integration: token exchange, deep links to locations in the app</li><li>3D scenes visualizing drilling-process data</li><li>Dependency injection with Zenject</li><li>A short video made with Timeline and Cinemachine</li></ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="project rv">
+    <div class="p-head"><span class="num">/06</span><h3>Lakhta Center<small>3D building app</small></h3>
+      <div class="tags"><span class="tag">Full rewrite</span><span class="tag">SOLID</span></div></div>
+    <div class="p-body">
+      <div class="bento">
+        <div class="tile full"><img loading="lazy" src="gif/07-lakhta-center-part1.gif" alt="Lakhta Center, part 1"><span class="lbl">01</span></div>
+        <div class="tile"><img loading="lazy" src="gif/07-lakhta-center-part2.gif" alt="Lakhta Center, part 2"><span class="lbl">02</span></div>
+        <div class="tile"><img loading="lazy" src="gif/07-lakhta-center-part3.gif" alt="Lakhta Center, part 3"><span class="lbl">03</span></div>
+      </div>
+      <div class="info">
+        <p>Took over mid-development and rewrote the codebase to follow SOLID principles.</p>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section id="lab">
+  <div class="sec-head rv">
+    <div><div class="eyebrow">03 — Lab</div><h2>Side <em>experiments</em></h2></div>
+    <p>Things built for fun: procedural animation, combat systems, physics and cameras.</p>
+  </div>
+
+  <article class="project rv">
+    <div class="p-head"><span class="num">/07</span><h3>PumpJack mobile<small>SteamVR → mobile port</small></h3>
+      <div class="tags"><span class="tag hot">Own IK</span><span class="tag">Cinemachine</span><span class="tag">Melee combat</span></div></div>
+    <div class="p-body">
+      <div class="bento" style="--c:3">
+        <div class="tile span2"><img loading="lazy" src="gif/09-pumpjack-2-spider.gif" alt="Procedural spider"><span class="lbl">Procedural spider · custom IK</span></div>
+        <div class="tile"><img loading="lazy" src="gif/09-pumpjack-5.gif" alt="PumpJack"></div>
+        <div class="tile"><img loading="lazy" src="gif/09-pumpjack-1.gif" alt="Melee combat"><span class="lbl">Combat</span></div>
+        <div class="tile"><img loading="lazy" src="gif/09-pumpjack-3-part1.gif" alt="PumpJack"></div>
+        <div class="tile"><img loading="lazy" src="gif/09-pumpjack-3-part2.gif" alt="PumpJack"></div>
+        <div class="tile full"><img loading="lazy" src="gif/09-pumpjack-4.gif" alt="Hitboxes"><span class="lbl">Hitboxes</span></div>
+      </div>
+      <div class="info">
+        <p>Ported a SteamVR project to mobile with a new input scheme and rewrote the code.</p>
+        <ul><li>Character movement and camera tracking with Cinemachine</li><li>Procedural spider animation — my own inverse kinematics, no third-party tools</li><li>Melee combat: hitbox size and placement, combo strikes inspired by <i>Gothic</i></li></ul>
+      </div>
+    </div>
+  </article>
+
+  <article class="project rv">
+    <div class="p-head"><span class="num">/08</span><h3>Abeas<small>with friends · unfinished</small></h3>
+      <div class="tags"><span class="tag">Spherical movement</span><span class="tag">Camera</span></div></div>
+    <div class="p-body">
+      <div class="bento">
+        <div class="tile"><img loading="lazy" src="gif/06-abeas-part1.gif" alt="Abeas, part 1"><span class="lbl">01</span></div>
+        <div class="tile"><img loading="lazy" src="gif/06-abeas-part2.gif" alt="Abeas, part 2"><span class="lbl">02</span></div>
+        <div class="tile"><img loading="lazy" src="gif/06-abeas-part3.gif" alt="Abeas, part 3"><span class="lbl">03</span></div>
+        <div class="tile"><img loading="lazy" src="gif/06-abeas-part4.gif" alt="Abeas, part 4"><span class="lbl">04</span></div>
+      </div>
+      <div class="info">
+        <p>A ship moving around a sphere with inertia, and a camera that tracks it correctly — harder than it looks.</p>
+      </div>
+    </div>
+  </article>
+
+  <article class="project rv">
+    <div class="p-head"><span class="num">/09</span><h3>Image &amp; 360° viewer<small>client work → personal project</small></h3>
+      <div class="tags"><span class="tag">Panoramas</span></div></div>
+    <div class="p-body">
+      <div class="bento" style="--c:1">
+        <div class="tile"><img loading="lazy" src="gif/05-image-360-viewer.gif" alt="360 viewer"></div>
+      </div>
+      <div class="info">
+        <p>A photo and panorama viewer first built for a client, later reworked as a personal project.</p>
+      </div>
+    </div>
+  </article>
+</section>
+
+
+<div class="contact rv" id="contact">
+  <div class="eyebrow">04 — Contact</div>
+  <h2>Let's build<br><em>something.</em></h2>
+  <div class="links">
+    <a href="mailto:demozbox@gmail.com"><span>demozbox@gmail.com</span><span>↗</span></a>
+  </div>
+</div>
+
+<footer><span>© Roman Kolychev</span><span>Unity Developer · Remote</span></footer>
+</main>
+
+<script>
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold:.08 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
